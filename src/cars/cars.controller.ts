@@ -1,6 +1,7 @@
-import {Body, Controller, Delete, Get, Inject, Param, ParseIntPipe, Patch, Post} from '@nestjs/common';
-import {CarsService} from "./cars.service";
-import {Car} from "../models/car.interface";
+import { Body, Controller, Delete, Get, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { CarsService } from "./cars.service";
+import { Car } from "../models/car.interface";
+import { CreateCarDto } from "../models/create-car.dto";
 
 @Controller('cars')
 export class CarsController {
@@ -14,22 +15,22 @@ export class CarsController {
     }
 
     @Get(':id')
-    findCarById(@Param('id', ParseIntPipe) id: number): Car | undefined {
+    findCarById(@Param('id', ParseUUIDPipe) id: string): Car | undefined {
         return this.carsService.findCarById(id);
     }
 
     @Post()
-    addCar(@Body() car: Car) {
+    addCar(@Body() car: CreateCarDto): CreateCarDto {
         return car;
     }
 
     @Patch(':id')
-    updateCar(@Param('id', ParseIntPipe) id: number, @Body() car: Car) {
+    updateCar(@Param('id', ParseUUIDPipe) id: string, @Body() car: Car) {
         return car;
     }
 
     @Delete()
-    deleteCar(@Param('id', ParseIntPipe) id: number) {
+    deleteCar(@Param('id', ParseUUIDPipe) id: string) {
         return id;
     }
 
