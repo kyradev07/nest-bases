@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Inject, Param, ParseUUIDPipe, Patch, Pos
 import { CarsService } from "./cars.service";
 import { Car } from "../models/car.interface";
 import { CreateCarDto } from "../models/create-car.dto";
+import { UpdateCarDto } from "../models/update-car.dto";
 
 @Controller('cars')
 export class CarsController {
@@ -15,18 +16,18 @@ export class CarsController {
     }
 
     @Get(':id')
-    findCarById(@Param('id', ParseUUIDPipe) id: string): Car | undefined {
+    findCarById(@Param('id', ParseUUIDPipe) id: string): Car {
         return this.carsService.findCarById(id);
     }
 
     @Post()
     addCar(@Body() car: CreateCarDto): CreateCarDto {
-        return car;
+        return this.carsService.addCar(car);
     }
 
     @Patch(':id')
-    updateCar(@Param('id', ParseUUIDPipe) id: string, @Body() car: Car) {
-        return car;
+    updateCar(@Param('id', ParseUUIDPipe) id: string, @Body() car: UpdateCarDto): UpdateCarDto {
+        return this.carsService.updateCar(id, car);
     }
 
     @Delete()
