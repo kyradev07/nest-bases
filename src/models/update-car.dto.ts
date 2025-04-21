@@ -1,8 +1,17 @@
-import { IsString } from "class-validator";
+import { IsOptional, IsString, IsUUID } from "class-validator";
 
-export class CreateCarDto {
+export class UpdateCarDto {
+
     @IsString()
-    readonly brand: string;
+    @IsUUID()
+    @IsOptional()
+    readonly id?: string;
+
     @IsString()
-    readonly model: string;
+    @IsOptional()
+    readonly brand?: string;
+
+    @IsString()
+    @IsOptional()
+    readonly model?: string;
 }
