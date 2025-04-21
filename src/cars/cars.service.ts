@@ -74,4 +74,10 @@ export class CarsService {
         return carDB;
     }
 
+    deleteCarById(id: string): void {
+        this.findCarById(id)
+        this.cars = this.cars.filter(car => car.id !== id);
+
+    }
+
 }
