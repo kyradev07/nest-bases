@@ -7,62 +7,59 @@ import { Brand } from "./entities/brand.entity";
 @Injectable()
 export class BrandsService {
 
-  private brands: Brand[] = [
-    {
-      id: uuid(),
-      name: 'Toyota',
-      createAt: new Date().getTime()
-    }
-  ]
+    private brands: Brand[];
 
+    create(createBrandDto: CreateBrandDto): Brand {
+        const brand: Brand = {
+            id: uuid(),
+            name: createBrandDto.name.toLowerCase(),
+            createAt: new Date().getTime()
+        }
 
-  create(createBrandDto: CreateBrandDto): Brand {
-    const brand: Brand = {
-      id: uuid(),
-      name: createBrandDto.name.toLowerCase(),
-      createAt: new Date().getTime()
+        this.brands.push(brand);
+
+        return brand;
     }
 
-    this.brands.push(brand);
-
-    return brand;
-  }
-
-  findAll(): Brand[] {
-    return this.brands;
-  }
-
-  findOne(id: string): Brand {
-    const brand: Brand | undefined = this.brands.find(brand => brand.id == id);
-
-    if (!brand) {
-      throw new NotFoundException(`Brand with id ${id} not found`);
+    findAll(): Brand[] {
+        return this.brands;
     }
 
-    return brand;
-  }
+    findOne(id: string): Brand {
+        const brand: Brand | undefined = this.brands.find(brand => brand.id == id);
 
-  update(id: string, updateBrandDto: UpdateBrandDto): Brand {
-    let brandDB: Brand = this.findOne(id);
+        if (!brand) {
+            throw new NotFoundException(`Brand with id ${id} not found`);
+        }
 
-    this.brands = this.brands.map(brand => {
-      if (brand.id === id) {
-        brandDB = {
-          ...brandDB,
-          ...updateBrandDto,
-          updateAt: new Date().getTime()
-        };
+        return brand;
+    }
+
+    update(id: string, updateBrandDto: UpdateBrandDto): Brand {
+        let brandDB: Brand = this.findOne(id);
+
+        this.brands = this.brands.map(brand => {
+            if (brand.id === id) {
+                brandDB = {
+                    ...brandDB,
+                    ...updateBrandDto,
+                    updateAt: new Date().getTime()
+                };
+                return brandDB;
+            }
+            return brand;
+        });
+
         return brandDB;
-      }
-      return brand;
-    });
+    }
 
-    return brandDB;
-  }
+    remove(id: string): void {
+        this.findOne(id);
+        this.brands = this.brands.filter(brand => brand.id !== id);
+    }
 
-  remove(id: string): void {
-    this.findOne(id);
-    this.brands = this.brands.filter(brand => brand.id !== id);
+    fillBrandsSeed(brands: Brand[]): void {
+        this.brands = [...brands];
+    }
 
-  }
 }
