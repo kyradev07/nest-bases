@@ -17,7 +17,7 @@ export class SeedService {
     runSeed(): string {
         this.carsService.fillCarsSeed(CARS_SEED);
         this.brandsService.fillBrandsSeed(BRANDS_SEED);
-        return `This action returns all seed`;
+        return `This action set all mock data`;
     }
 
 }
