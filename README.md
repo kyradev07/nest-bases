@@ -44,6 +44,14 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Populate data with seed
+Execute the endpoint below at the first to populate variables with mock data.
+
+```bash
+# development
+$ http://localhost:3000/seed
+```
+
 ## Run tests
 
 ```bash
